@@ -1,9 +1,12 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import user.User;
 
-public class LoginPage extends BasePage{
+
+public class LoginPage extends BasePage {
     private static final By USERNAME_INPUT = By.id("user-name");
     private static final By PASSWORD_INPUT = By.id("password");
     private static final By LOGIN_BUTTON = By.id("login-button");
@@ -13,28 +16,31 @@ public class LoginPage extends BasePage{
         super(driver);
     }
 
+    @Step("Открытие браузера")
     public void open() {
-        driver.get(BASE_URL);
+        driver.get(BASE_URL + "cart.html");
     }
 
-    public void login(String user,String password) {
-       fillLoginInput(user);
-       fillPasswordInput(password);
-       clickSubmitButton();
+    @Step("Ввод данных пользователя")
+    public void login(User user) {
+        fillLoginInput(user.getEmail());
+        fillPasswordInput(user.getPassword());
+        clickSubmitBtn();
     }
 
-     public void fillLoginInput(String user) {
+    public void fillLoginInput(String user) {
         driver.findElement(USERNAME_INPUT).sendKeys(user);
-     }
+    }
 
-     public void fillPasswordInput(String password) {
+    public void fillPasswordInput(String password) {
         driver.findElement(PASSWORD_INPUT).sendKeys(password);
-     }
-     public void clickSubmitButton() {
-        driver.findElement(LOGIN_BUTTON).submit();
-     }
-     public String getErrorMessage() {
-         return driver.findElement(errorSign).getText();
-     }
+    }
 
+    public void clickSubmitBtn() {
+        driver.findElement(LOGIN_BUTTON).submit();
+    }
+
+    public String getErrorMsg() {
+        return driver.findElement(errorSign).getText();
+    }
 }

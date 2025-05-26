@@ -1,40 +1,46 @@
 package tests;
 
+import enums.DepartmentNaming;
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import user.UserFactory;
 
-import static org.testng.Assert.assertEquals;
+import static enums.DepartmentNaming.PRODUCTS;
+import static org.testng.Assert.*;
 
 public class LoginTest extends BaseTest {
-    @DataProvider()
-    public Object[][] incorrectLoginData() {
-        return new Object[][] {
+    @Epic("Модуль логина интернет-магазина")
+    @Feature("")
+    @Story("STG")
+    @Severity(SeverityLevel.BLOCKER)
+    @Owner("Mulyukin")
+    @TmsLink("")
+    @Issue("1")
+    @Test(description = "Проверка авторизации")
+    @Flaky
+    public void correctLogin() {
+        loginPage.open();
+        loginPage.login(UserFactory.withAdminPermission());
+        assertTrue(productsPage.titleIsDisplayed());
+        assertEquals(productsPage.getTitle(), PRODUCTS.getDisplayName());
+    }
+
+    @DataProvider(name = "incorrectLoginDate")
+    public Object[][] loginData() {
+        return new Object[][]{
                 {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
                 {"", "secret_sauce", "Epic sadface: Username is required"},
-                {"standard_user", "", "Epic sadface: Password is required"},
+                {"standard_user", "", "Epic sadface: Password is required"}
         };
     }
 
-    @Test()
-    public void correctLogin() {
+    @Test(dataProvider = "incorrectLoginDate")
+    public void incorrectLogin(String user, String pass, String errorMsg) {
         loginPage.open();
-        loginPage.login(user, password);
-        productsPage.isOpen();
+        loginPage.fillLoginInput(user);
+        loginPage.fillPasswordInput(pass);
+        loginPage.clickSubmitBtn();
+        assertEquals(loginPage.getErrorMsg(), errorMsg);
     }
-
-
-    @Test(dataProvider = "incorrectLoginData")
-    public void incorrectLogin(String User, String Password, String errorMessage) {
-        loginPage.open();
-        loginPage.login(User, Password);
-        assertEquals(loginPage.getErrorMessage(), errorMessage);
-
-    }
-
-
-
-
-
-
-
 }
