@@ -1,13 +1,13 @@
 package tests;
 
-import enums.DepartmentNaming;
 import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import user.UserFactory;
 
 import static enums.DepartmentNaming.PRODUCTS;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class LoginTest extends BaseTest {
     @Epic("Модуль логина интернет-магазина")
@@ -19,6 +19,7 @@ public class LoginTest extends BaseTest {
     @Issue("1")
     @Test(description = "Проверка авторизации")
     @Flaky
+
     public void correctLogin() {
         loginPage.open();
         loginPage.login(UserFactory.withAdminPermission());
@@ -36,11 +37,11 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(dataProvider = "incorrectLoginDate")
-    public void incorrectLogin(String user, String pass, String errorMsg) {
+    public void incorrectLogin(String user, String pass, String errorMessage) {
         loginPage.open();
         loginPage.fillLoginInput(user);
         loginPage.fillPasswordInput(pass);
         loginPage.clickSubmitBtn();
-        assertEquals(loginPage.getErrorMsg(), errorMsg);
+        assertEquals(loginPage.getErrorMessage(), errorMessage);
     }
 }

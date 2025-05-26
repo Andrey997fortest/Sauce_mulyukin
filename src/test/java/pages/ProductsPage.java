@@ -6,8 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductsPage extends BasePage {
-    private final By title = By.cssSelector("[class='title']");
-    private final By title2 = By.xpath("//*[text()='Products']");
+    private final By title_css = By.cssSelector("[class='title']");
+    private final By title_xpath = By.xpath("//*[text()='Products']");
     private static final String ADD_TO_CART_BUTTON_PATTERN
             = "//div[text()='%s']//ancestor::div[@class='inventory_item']//button";
 
@@ -17,16 +17,16 @@ public class ProductsPage extends BasePage {
 
     @Step("Проверка названия товара")
     public String getTitle() {
-        return driver.findElement(title).getText();
+        return driver.findElement(title_css).getText();
     }
 
     @Step("Проверка отображения заголовка страницы")
     public boolean titleIsDisplayed() {
-        return driver.findElement(title2).isDisplayed();
+        return driver.findElement(title_xpath).isDisplayed();
     }
 
-    public void addToCart(String goodsName) {
-        By addToCart = By.xpath(String.format(ADD_TO_CART_BUTTON_PATTERN, goodsName));
+    public void addToCart(String favNames) {
+        By addToCart = By.xpath(String.format(ADD_TO_CART_BUTTON_PATTERN, favNames));
         driver.findElement(addToCart).click();
     }
 

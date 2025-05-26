@@ -40,7 +40,7 @@ public class LoginPage extends BasePage {
         driver.findElement(LOGIN_BUTTON).submit();
     }
 
-    public String getErrorMsg() {
+    public String getErrorMessage() {
         return driver.findElement(errorSign).getText();
     }
 }
