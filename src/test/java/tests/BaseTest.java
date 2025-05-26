@@ -14,8 +14,7 @@ import pages.LoginPage;
 import pages.ProductsPage;
 import utils.PropertyReader;
 import utils.TestListener;
-
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeUnit; //оставил на всякий случай
 
 @Listeners(TestListener.class)
 public class BaseTest {

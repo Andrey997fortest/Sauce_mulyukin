@@ -2,7 +2,6 @@ package tests;
 
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
-
 import static org.testng.Assert.*;
 import static user.UserFactory.withAdminPermission;
 
@@ -16,7 +15,8 @@ public class AddToCartTest extends BaseTest {
     @Issue("2")
     @Test(description="Проверяем, что товары добавлены в корзину")
     @Flaky
-    public void checkGoodsInCart() {
+
+    public void checkFavInCart() {
         loginPage.open();
         loginPage.login(withAdminPermission());
         productsPage.isOpen();
@@ -27,5 +27,14 @@ public class AddToCartTest extends BaseTest {
         assertTrue(cartPage.getProductsNames().contains("Sauce Labs Backpack"));
         assertEquals(cartPage.getProductsNames().size(), 3);
         assertFalse(cartPage.getProductsNames().isEmpty());
+    }
+
+    @Test
+    public void openItemFromCart() {
+        loginPage.open();
+        loginPage.login(withAdminPermission());
+        loginPage.clickSubmitBtn();
+        productsPage.isOpen();
+        cartPage.openCartPage();
     }
 }

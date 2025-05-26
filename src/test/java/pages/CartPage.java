@@ -21,4 +21,7 @@ public class CartPage extends BasePage {
 
         return names;
     }
+    public void openCartPage() {
+        driver.get(BASE_URL + "/cart.html");
+    }
 }
